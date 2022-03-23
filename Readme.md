@@ -94,12 +94,37 @@ The output is as follows. As you can see `اهواز` is correctly chosen!
 Using the following code, top most frequent 80K samples is written to `kenlm_vocabs.txt`. To make it faster vocabs with
 less than 25 occurrences are discarded!  
 ```
-python get_kenlm_top_vocabs.py --top-vocabs 80000 --ignore-less 25 --output kenlm_vocabs.txt
+python get_kenlm_top_vocabs.py --top-vocabs 80000 --ignore-less 25 --output wiki_fa_kenlm_vocabs.txt
 ```
 
 ### Train KenLM model
-`bash train_kenlm.sh -o 4 -l fa`
+First install the KenLM requirements using the following commands:
 
+```commandline
+sudo apt-get update
+sudo apt-get install cmake build-essential libssl-dev
+sudo apt install libeigen3-dev
+sudo apt install libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-test-dev -y
+sudo apt-get install libboost-all-dev zlib1g-dev libbz2-dev liblzma-dev -y
+sudo apt-get update
+```
+Then `clone` and make the c++ modules:
+```commandline
+git clone https://github.com/kpu/kenlm.git
+cd kenlm
+mkdir -p build
+cd build
+cmake ..
+make -j 4
+```
+
+If everything goes fine, you can find `lmplz` and `build_binary` under the `./kenlm/build/bin` directory. Eventually, 
+train `kenlm` language model using following bash script.
+```
+bash train_kenlm.sh -o 4 -l fa
+```
+
+Note: the binary module is also created because it's much faster than the non-binarized one.
 
 # Inference
 `python inference.py`

@@ -131,3 +131,4 @@ dmypy.json
 # bz files
 *.bz2
 wikiextractor
+kenlm
