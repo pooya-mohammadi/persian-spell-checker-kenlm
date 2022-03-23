@@ -38,7 +38,6 @@ pip install -r requirements.txt
 Main Processing. It may take some time!
 ```
 python preprocess_wiki_dump.py fawiki-latest-pages-articles.txt
-# This may take a while
 python cleaner.py
 ```
 
