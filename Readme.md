@@ -41,8 +41,12 @@ python preprocess_wiki_dump.py fawiki-latest-pages-articles.txt
 python cleaner.py
 ```
 
-## Get counts from corpus
-`bash get_counts.sh -l fa -o 4 -c true`
+## Get the word-count of the corpus 
+Using this script the corpus words will be counted. Before that some extra normalization and cleaning will be applied to the words as well.
+```commandline
+sudo apt-get install pv
+bash get_counts.sh 
+```
 
 ## Get Top words
 `python writing_top_words.py --top-words 80000 --ignore-less 25`
