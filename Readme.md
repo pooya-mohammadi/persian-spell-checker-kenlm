@@ -91,13 +91,13 @@ The output is as follows. As you can see `اهواز` is correctly chosen!
 ```
 
 ### Get top frequent vocabs for KenLM
-Using the following code, top most frequent 80K samples is written to `wiki_fa.vocab`. To make it faster words with
-less than 25 occurrence are discarded!  
+Using the following code, top most frequent 80K samples is written to `kenlm_vocabs.txt`. To make it faster vocabs with
+less than 25 occurrences are discarded!  
 ```
-python get_top_words.py --top-words 80000 --ignore-less 25
+python get_kenlm_top_vocabs.py --top-vocabs 80000 --ignore-less 25 --output kenlm_vocabs.txt
 ```
 
-## Train the model
+### Train KenLM model
 `bash train_kenlm.sh -o 4 -l fa`
 
 

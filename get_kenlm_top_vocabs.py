@@ -3,12 +3,11 @@ from tqdm import tqdm
 
 parser = ArgumentParser()
 parser.add_argument("--counts", default="wiki_fa.counts")
-parser.add_argument("--vocab", default="wiki_fa.vocab")
-parser.add_argument("--top-words", type=int, default=80000,
+parser.add_argument("--output", default="kenlm_vocabs.txt")
+parser.add_argument("--top-vocabs", type=int, default=80000,
                     help="number of top words that will be chosen. Default is 80k")
-parser.add_argument("--ignore-less", type=int, default=50,
-                    help="vocabs with less than specified count number will be ignored. Default is 50")
-parser.add_argument("--include-counts", action='store_true', help="Whether to include the counts")
+parser.add_argument("--ignore-less", type=int, default=25,
+                    help="vocabs with less than specified count number will be ignored. Default is 25")
 
 args = parser.parse_args()
 
@@ -20,25 +19,22 @@ top_count = 0
 total_count = len(lines)
 vocabs = ""
 
-for line in tqdm(lines, desc="number of vocabs", total=args.top_words):
+for line in tqdm(lines, desc="number of vocabs", total=args.top_vocabs):
     try:
         count, vocab = line.strip().split(" ")
-        # if len(vocab) or its count is less than 1
+        # if len(vocab) or it's occurrence count is less than 1 ignore the vocab
         if len(vocab) <= 1 or int(count) < args.ignore_less:
             continue
-        if args.include_counts:
-            vocabs += f"{vocab} {count}\n"
-            top_count += 1
-        else:
-            vocabs += f"{vocab} "
-            top_count += 1
-        if top_count > args.top_words:
-            print(f"[INFO] Got {args.top_words}. Exiting...")
+        vocabs += f"{vocab} "
+        top_count += 1
+        if top_count > args.top_vocabs:
+            print(f"[INFO] Got {args.top_vocabs} vocabs. Exiting...")
             break
-    except ValueError:
-        print(f"[ERROR] line: {line}")
+    except Exception as e:
+        print(f"[ERROR] {e} in line: {str(line)}")
         continue
+
 print(f"[INFO] Number of written words: {top_count}")
-print(f"[INFO] writing vocabs to {args.vocab}")
-with open(args.vocab, mode='w') as f:
+print(f"[INFO] Successfully saved vocabs to {args.output}")
+with open(args.output, mode='w') as f:
     f.write(vocabs)
