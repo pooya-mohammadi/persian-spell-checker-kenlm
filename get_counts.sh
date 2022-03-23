@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
-usage="$(basename "$0") [-h] [-l {'fa'|'de'|'fr'|'it'|...}] [-r recreate_count] -- Create n-gram Language Model on ~2.2M Wikipedia articles using KenLM.
+usage="$(basename "$0") [-h] [-l {'fa'|'de'|'fr'|'it'|...}] [-r recreate_count] -- Get counts!
 where:
-    -h  show this help text
-    -l input language fa
+    -h show this help text
+    -l input language: fa
     -r recreate vocabulary
 EXAMPLE USAGE: counting words in the input dataset for the Persian language. USAGE: get_count.sh -l fa -r true
 "
@@ -21,7 +21,7 @@ while getopts ":h:l:r" option; do
        ;;
     l) language=$OPTARG
        ;;
-    c) recreate_count=true
+    r) recreate_count=true
        ;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
