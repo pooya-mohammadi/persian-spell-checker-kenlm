@@ -41,15 +41,19 @@ python preprocess_wiki_dump.py fawiki-latest-pages-articles.txt
 python cleaner.py
 ```
 
-## Get the word-count of the corpus 
+### Get the word-count of the corpus 
 Using this script the corpus words will be counted. Before that some extra normalization and cleaning will be applied to the words as well.
 ```commandline
 sudo apt-get install pv
 bash get_counts.sh 
 ```
 
-## Get Top words
-`python writing_top_words.py --top-words 80000 --ignore-less 25`
+### Get Top words
+Using the following code, top most frequent 80K samples is written to `wiki_fa.vocab`. To make it faster words with
+less than 25 occurrence are discarded!  
+```
+python get_top_words.py --top-words 80000 --ignore-less 25
+```
 
 
 ## Train the model
