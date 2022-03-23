@@ -48,16 +48,58 @@ sudo apt-get install pv
 bash get_counts.sh 
 ```
 
-### Get Top words
+### Get top frequent vocabs for SymSpell[Spell-Checker]
+Symspell needs a text file that contains vocabs and their occurrence. `fa_wiki.counts` that created in the
+`Get the word-count of the corpus` section should be trimmed to only contain the 80k top frequent words and
+prevent those that have lower frequency than 50.
+```terminal
+python get_spellchecker_top_vocabs.py --top-vocabs 80000 --ignore-less 25 --output wiki_fa_80k.txt 
+```
+
+### Symspell
+Symspell is a simple spell checker. First, install it from pypi using the following command:
+```commandline
+pip install symspellpy
+```
+For using it, just instantiate it with the vocab dictionary we created in the `Get top frequent vocabs for SymSpell` section
+```python
+# import symspell
+from symspellpy import SymSpell, Verbosity
+
+# instantiate it
+sym_spell = SymSpell(max_dictionary_edit_distance=2, prefix_length=7)
+dictionary_path = "wiki_fa_80k.txt"
+sym_spell.load_dictionary(dictionary_path, term_index=0, count_index=1)
+
+# input sample:
+input_term = "اهوار"  # misspelling of "اهواز" It's a city name!
+
+# lookup the dictionary
+suggestions = sym_spell.lookup(input_term, Verbosity.ALL, max_edit_distance=2)
+# display suggestion term, term frequency, and edit distance
+for suggestion in suggestions[:5]:
+    print(suggestion)
+```
+The output is as follows. As you can see `اهواز` is correctly chosen!
+
+```commandline
+اهواز, 1, 4692
+ادوار, 1, 1350
+الوار, 1, 651
+انوار, 1, 305
+اهورا, 1, 225
+```
+
+### Get top frequent vocabs for KenLM
 Using the following code, top most frequent 80K samples is written to `wiki_fa.vocab`. To make it faster words with
 less than 25 occurrence are discarded!  
 ```
 python get_top_words.py --top-words 80000 --ignore-less 25
 ```
 
-
 ## Train the model
 `bash train_kenlm.sh -o 4 -l fa`
+
 
 # Inference
 `python inference.py`

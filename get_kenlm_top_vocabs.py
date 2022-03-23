@@ -8,7 +8,7 @@ parser.add_argument("--top-words", type=int, default=80000,
                     help="number of top words that will be chosen. Default is 80k")
 parser.add_argument("--ignore-less", type=int, default=50,
                     help="vocabs with less than specified count number will be ignored. Default is 50")
-parser.add_argument("--include-counts", action='store_true', help="Whether include the counts")
+parser.add_argument("--include-counts", action='store_true', help="Whether to include the counts")
 
 args = parser.parse_args()
 
@@ -20,7 +20,7 @@ top_count = 0
 total_count = len(lines)
 vocabs = ""
 
-for line in tqdm(lines, desc="number of vocabs"):
+for line in tqdm(lines, desc="number of vocabs", total=args.top_words):
     try:
         count, vocab = line.strip().split(" ")
         # if len(vocab) or its count is less than 1
