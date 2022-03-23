@@ -18,15 +18,24 @@ bash download_wiki_dump.sh $language
 Extract and convert `.bz2` format to `.txt`. Using `wikiextractor` the dump is cleaned and converted `.txt` file. This may take some time as well!
 
 ```
-n_processors=4
+n_processors=16
 bash extract_and_clean_wiki_dump.sh ${language}wiki-latest-pages-articles.xml.bz2 $n_processors
 ```
 
+**Note**: In case of a pdb error, change the `expand_templates=True` variable to `expand_templates=False` which is an
+input argument to the `clean_text` function located in around line 948 of wikiextractor/wikiextractor/extract.py.   
 
-## Install python requirements:
-`pip install -r requirements.txt`
+### Preprocessing and normalization
+The output text should be preprocessed and normalized to remove unnecessary texts like "[doc]" and normalize the texts using `hazm` and `nltk` libraries! 
 
-## preprocess and normalize 
+#### Install python requirements:
+Install the requirements:
+```
+pip install -r requirements.txt
+```
+
+#### preprocess and normalize
+Main Processing. It may take some time!
 ```
 python preprocess_wiki_dump.py fawiki-latest-pages-articles.txt
 # This may take a while
