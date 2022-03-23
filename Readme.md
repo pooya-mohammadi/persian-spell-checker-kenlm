@@ -126,10 +126,25 @@ bash train_kenlm.sh -o 4 -l fa
 
 Note: the binary module is also created because it's much faster than the non-binarized one.
 
-# Inference
-`python inference.py`
+### Kenlm Inference on python
+Install KenLm:
+```commandline
+pip install https://github.com/kpu/kenlm/archive/master.zip
+```
+
+How to use it:
+```commandline
+import kenlm
+
+model = kenlm.Model('fa_wiki.binary')
+print("score: ", model.score('کشور ایران شهر تهران', bos=True, eos=True))
+print("score: ", model.score('کشور تهران شهر ایران', bos=True, eos=True))
+# score:  -11.683658599853516
+# score:  -15.572178840637207
+```
+For more examples check out the following link: https://github.com/kpu/kenlm/blob/master/python/example.py
 
 ## References
 1. https://github.com/tiefenauer/wiki-lm
 2. https://towardsdatascience.com/pre-processing-a-wikipedia-dump-for-nlp-model-training-a-write-up-3b9176fdf67
-
+3. https://github.com/kpu/kenlm
