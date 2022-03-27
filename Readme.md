@@ -102,11 +102,7 @@ First install the KenLM requirements using the following commands:
 
 ```commandline
 sudo apt-get update
-sudo apt-get install cmake build-essential libssl-dev
-sudo apt install libeigen3-dev
-sudo apt install libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-test-dev -y
-sudo apt-get install libboost-all-dev zlib1g-dev libbz2-dev liblzma-dev -y
-sudo apt-get update
+sudo apt-get install cmake build-essential libssl-dev libeigen3-dev libboost-all-dev zlib1g-dev libbz2-dev liblzma-dev -y
 ```
 Then `clone` and make the c++ modules:
 ```commandline
